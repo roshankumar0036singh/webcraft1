@@ -1,0 +1,2002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Learning Platform - EduFlow</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ===== PREMIUM DESIGN SYSTEM WITH NEW COLOR THEME ===== */
+        :root {
+            /* Modern Color Palette - Teal & Emerald Theme */
+            --primary: #06B6D4;
+            --primary-light: #22D3EE;
+            --primary-dark: #0891B2;
+            --secondary: #059669;
+            --secondary-light: #10B981;
+            --accent: #8B5CF6;
+            --accent-light: #A78BFA;
+            
+            /* Neutrals */
+            --text-dark: #0F172A;
+            --text-light: #475569;
+            --text-lighter: #94A3B8;
+            --bg-white: #FFFFFF;
+            --bg-light: #F1F5F9;
+            --bg-lighter: #E2E8F0;
+            --border: #CBD5E1;
+            
+            /* Status Colors */
+            --success: #16A34A;
+            --warning: #EA580C;
+            --danger: #DC2626;
+            --info: #0284C7;
+            
+            /* Spacing System (8px base) */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+            --spacing-4xl: 96px;
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --radius-2xl: 24px;
+            --radius-3xl: 32px;
+            --radius-full: 9999px;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+            --shadow-md: 0 4px 6px rgba(15, 23, 42, 0.1);
+            --shadow-lg: 0 10px 15px rgba(15, 23, 42, 0.15);
+            --shadow-xl: 0 20px 25px rgba(15, 23, 42, 0.2);
+            --shadow-2xl: 0 25px 50px rgba(15, 23, 42, 0.25);
+        }
+
+        /* ===== RESET & BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            font-size: 16px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: var(--spacing-md);
+        }
+
+        h1 { font-size: 56px; letter-spacing: -0.02em; }
+        h2 { font-size: 42px; letter-spacing: -0.01em; }
+        h3 { font-size: 32px; }
+        h4 { font-size: 24px; }
+        h5 { font-size: 20px; }
+        h6 { font-size: 16px; }
+
+        p {
+            color: var(--text-light);
+            margin-bottom: var(--spacing-md);
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+        }
+
+        /* ===== LAYOUT UTILITIES ===== */
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+        }
+
+        .flex { display: flex; }
+        .flex-center { display: flex; align-items: center; justify-content: center; }
+        .flex-between { display: flex; align-items: center; justify-content: space-between; }
+        .flex-col { display: flex; flex-direction: column; }
+        .grid { display: grid; }
+        .gap-md { gap: var(--spacing-md); }
+        .gap-lg { gap: var(--spacing-lg); }
+
+        /* ===== SCROLL INDICATOR ===== */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+            width: 0;
+            z-index: 9999;
+            transition: width 0.1s ease;
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ===== NAVBAR STYLES ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-white);
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            box-shadow: var(--shadow-lg);
+            padding: 12px 0;
+        }
+
+        nav .container {
+            padding: 16px var(--spacing-lg);
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: 24px;
+            font-weight: 800;
+            color: #059669;
+            transition: all 0.3s ease;
+            min-width: fit-content;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-icon {
+            font-size: 32px;
+            color: #10B981;
+        }
+
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-lg);
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: var(--radius-md);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+
+        .nav-btn-login {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 10px 20px;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .nav-btn-login:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-btn-signup {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-btn-signup:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 6px;
+            background: none;
+            border: none;
+            padding: 8px;
+        }
+
+        .hamburger-menu span {
+            width: 24px;
+            height: 2px;
+            background: var(--text-dark);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-menu.active span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+
+        .hamburger-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-menu.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-25px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes progressFill {
+            from { width: 0%; }
+            to { width: var(--progress-value); }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        /* ===== GRADIENT & COLORS ===== */
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ===== SECTIONS ===== */
+        .section {
+            padding: var(--spacing-4xl) 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--spacing-4xl);
+        }
+
+        .section-header h2 {
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .section-header p {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--text-light);
+        }
+
+        .bg-light { background: var(--bg-light); }
+        .bg-white { background: var(--bg-white); }
+
+        /* ===== HERO SECTION ===== */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            color: white;
+            padding: var(--spacing-3xl) 0;
+            margin-top: 70px;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: 0;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: 0;
+        }
+
+        .hero-section .container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .hero-section h1 {
+            color: white;
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.1;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero-section > .container > p {
+            font-size: 22px;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: var(--spacing-2xl);
+            animation: fadeInUp 0.8s ease 0.1s both;
+        }
+
+        .button-group {
+            display: flex;
+            gap: var(--spacing-lg);
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .btn {
+            padding: 14px 36px;
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+            background: var(--bg-light);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+            border-color: var(--primary-light);
+            color: var(--primary-light);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ===== SEARCH SECTION ===== */
+        .search-section {
+            background: white;
+            padding: var(--spacing-3xl) 0;
+        }
+
+        .search-box {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 18px 24px;
+            font-size: 16px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-2xl);
+            transition: all 0.3s ease;
+            background: var(--bg-light);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.1);
+        }
+
+        .search-box button {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .search-box button:hover {
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ===== COURSE GRID ===== */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .course-card {
+            background: white;
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-card:hover {
+            transform: translateY(-16px);
+            box-shadow: var(--shadow-2xl);
+            border-color: var(--primary);
+        }
+
+        .course-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 56px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .course-body {
+            padding: var(--spacing-lg);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+            color: var(--primary);
+            padding: 6px 14px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            width: fit-content;
+        }
+
+        .course-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .course-description {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: auto;
+            line-height: 1.6;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+            border-top: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* ===== STATS SECTION ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-4xl);
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: var(--spacing-2xl);
+            border-radius: var(--radius-2xl);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: var(--spacing-md);
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            font-weight: 600;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== FIND YOUR PASSION SECTION (CENTERED) ===== */
+        .passion-section {
+            background: var(--bg-light);
+            padding: var(--spacing-4xl) 0;
+        }
+
+        .passion-header {
+            text-align: center;
+            margin-bottom: var(--spacing-3xl);
+        }
+
+        .passion-header h2 {
+            font-size: 48px;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .passion-chips-container {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .passion-chip {
+            padding: 14px 32px;
+            border-radius: var(--radius-full);
+            background: white;
+            border: 2px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: var(--text-light);
+            font-size: 16px;
+        }
+
+        .passion-chip:hover,
+        .passion-chip.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-color: transparent;
+            transform: scale(1.08);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ===== TRACK YOUR PROGRESS SECTION ===== */
+        .progress-section {
+            background: white;
+            padding: var(--spacing-4xl) 0;
+        }
+
+        .progress-header {
+            text-align: center;
+            margin-bottom: var(--spacing-3xl);
+        }
+
+        .progress-header h2 {
+            font-size: 48px;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .progress-header p {
+            font-size: 18px;
+            color: var(--text-light);
+        }
+
+        .progress-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .progress-item {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .progress-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .progress-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .progress-percentage {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 12px;
+            background: var(--bg-light);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm) inset;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #6366F1 0%, #8B5CF6 100%);
+            border-radius: var(--radius-full);
+            animation: progressFill 1s ease-out forwards;
+            box-shadow: var(--shadow-md);
+        }
+
+        .stats-achievement {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-3xl);
+            padding-top: var(--spacing-3xl);
+            border-top: 2px solid var(--border);
+        }
+
+        .achievement-card {
+            text-align: center;
+            padding: var(--spacing-lg);
+            background: var(--bg-light);
+            border-radius: var(--radius-lg);
+            transition: all 0.3s ease;
+        }
+
+        .achievement-card:hover {
+            background: white;
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+        }
+
+        .achievement-icon {
+            font-size: 42px;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .achievement-number {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .achievement-label {
+            font-size: 14px;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        /* ===== CATEGORIES SECTION ===== */
+        .categories-scroll {
+            display: flex;
+            gap: var(--spacing-md);
+            overflow-x: auto;
+            padding: var(--spacing-md) 0;
+            scroll-behavior: smooth;
+        }
+
+        .categories-scroll::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .categories-scroll::-webkit-scrollbar-track {
+            background: var(--bg-light);
+            border-radius: var(--radius-full);
+        }
+
+        .categories-scroll::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: var(--radius-full);
+        }
+
+        .category-chip {
+            padding: 12px 24px;
+            border-radius: var(--radius-full);
+            background: white;
+            border: 2px solid var(--border);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .category-chip:hover,
+        .category-chip.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-color: transparent;
+            transform: scale(1.05);
+        }
+
+        /* ===== FEATURES GRID ===== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-xl);
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: var(--spacing-lg);
+            transition: all 0.3s ease;
+        }
+
+        .feature-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: var(--radius-xl);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: white;
+            margin: 0 auto var(--spacing-lg);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.15) rotate(5deg);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .feature-description {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* ===== INSTRUCTORS SECTION ===== */
+        .instructors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .instructor-card {
+            background: white;
+            border-radius: var(--radius-2xl);
+            padding: var(--spacing-lg);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .instructor-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary);
+        }
+
+        .instructor-avatar {
+            width: 110px;
+            height: 110px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            color: white;
+            margin: 0 auto var(--spacing-lg);
+            font-weight: 700;
+            box-shadow: var(--shadow-md);
+        }
+
+        .instructor-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .instructor-title {
+            font-size: 14px;
+            color: var(--primary);
+            margin-bottom: var(--spacing-md);
+            font-weight: 600;
+        }
+
+        .instructor-card p {
+            font-size: 13px;
+            color: var(--text-lighter);
+        }
+
+        /* ===== TESTIMONIALS SECTION ===== */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: var(--radius-2xl);
+            padding: var(--spacing-lg);
+            border-left: 5px solid var(--primary);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+        }
+
+        .testimonial-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+
+        .testimonial-card::before {
+            content: '❝';
+            position: absolute;
+            top: var(--spacing-md);
+            right: var(--spacing-lg);
+            font-size: 36px;
+            color: var(--primary);
+            opacity: 0.3;
+        }
+
+        .testimonial-text {
+            font-size: 15px;
+            color: var(--text-light);
+            margin-bottom: var(--spacing-lg);
+            font-style: italic;
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .author-avatar {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .author-info h4 {
+            font-size: 15px;
+            color: var(--text-dark);
+            margin: 0 0 3px 0;
+        }
+
+        .author-info p {
+            font-size: 13px;
+            color: var(--text-lighter);
+            margin: 0;
+        }
+
+        .stars {
+            color: #FCD34D;
+            margin-bottom: var(--spacing-sm);
+            font-size: 14px;
+        }
+
+        /* ===== PRICING SECTION ===== */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: var(--radius-2xl);
+            padding: var(--spacing-2xl);
+            text-align: center;
+            border: 2px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary);
+            transform: scale(1.05);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .pricing-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .price-badge {
+            position: absolute;
+            top: -15px;
+            right: 24px;
+            background: linear-gradient(135deg, var(--danger) 0%, var(--warning) 100%);
+            color: white;
+            padding: 6px 18px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 700;
+            box-shadow: var(--shadow-md);
+        }
+
+        .pricing-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-dark);
+        }
+
+        .pricing-price {
+            font-size: 52px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .pricing-duration {
+            color: var(--text-light);
+            margin-bottom: var(--spacing-lg);
+            font-size: 14px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: var(--spacing-lg);
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 14px 0;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-features li:before {
+            content: '✓';
+            color: var(--success);
+            font-weight: 700;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: var(--radius-3xl);
+            padding: var(--spacing-4xl) var(--spacing-lg);
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .cta-section h2 {
+            color: white;
+            margin-bottom: var(--spacing-lg);
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: var(--spacing-2xl);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: linear-gradient(135deg, var(--text-dark) 0%, #1E293B 100%);
+            color: white;
+            padding: var(--spacing-4xl) 0 var(--spacing-lg);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-2xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .footer-section h4 {
+            color: white;
+            margin-bottom: var(--spacing-lg);
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .footer-section a {
+            color: var(--text-lighter);
+            transition: color 0.3s ease;
+            font-size: 14px;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-light);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-lighter);
+            font-size: 14px;
+        }
+
+        /* ===== MOBILE MENU ===== */
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: white;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-lg);
+            z-index: 999;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu a {
+            padding: 12px;
+            border-radius: var(--radius-md);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu a:hover {
+            background: var(--bg-light);
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            h1 { font-size: 36px; }
+            h2 { font-size: 28px; }
+            h3 { font-size: 24px; }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger-menu {
+                display: flex;
+            }
+
+            .section {
+                padding: var(--spacing-2xl) 0;
+            }
+
+            .section-header {
+                margin-bottom: var(--spacing-2xl);
+            }
+
+            .hero-section h1 {
+                font-size: 32px;
+            }
+
+            .hero-section > .container > p {
+                font-size: 16px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .course-grid,
+            .features-grid,
+            .instructors-grid,
+            .testimonials-grid,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .passion-chips-container {
+                gap: var(--spacing-sm);
+            }
+
+            .passion-chip {
+                padding: 12px 24px;
+                font-size: 14px;
+            }
+
+            .stats-achievement {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-buttons {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 24px; }
+            h2 { font-size: 20px; }
+            h3 { font-size: 18px; }
+
+            .container {
+                padding: 0 var(--spacing-md);
+            }
+
+            .hero-section {
+                padding: var(--spacing-2xl) 0;
+            }
+
+            .section {
+                padding: var(--spacing-2xl) 0;
+            }
+
+            .stat-number {
+                font-size: 36px;
+            }
+
+            .pricing-price {
+                font-size: 36px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                gap: var(--spacing-md);
+            }
+
+            .passion-header h2 {
+                font-size: 28px;
+            }
+
+            .progress-header h2 {
+                font-size: 28px;
+            }
+
+            .nav-buttons {
+                display: none;
+            }
+        }
+
+        /* ===== UTILITIES ===== */
+        .text-center { text-align: center; }
+        .mt-lg { margin-top: var(--spacing-lg); }
+        .mb-lg { margin-bottom: var(--spacing-lg); }
+        .hidden { display: none !important; }
+        .overflow-hidden { overflow: hidden; }
+        .relative { position: relative; }
+        .absolute { position: absolute; }
+        .opacity-20 { opacity: 0.2; }
+        .z-10 { z-index: 10; }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-indicator" id="scrollIndicator"></div>
+
+    <!-- Navigation Bar -->
+    <nav id="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="#" class="logo">
+                    <i class="fas fa-book-open logo-icon"></i>
+                    <span class="logo-text">EduFlow</span>
+                </a>
+
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#progress">Progress</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#instructors">Instructors</a></li>
+                </ul>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn-login">Login</button>
+                    <button class="nav-btn-signup">Sign Up</button>
+                </div>
+
+                <button class="hamburger-menu" id="hamburgerMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#courses">Courses</a>
+            <a href="#features">Features</a>
+            <a href="#progress">Progress</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#instructors">Instructors</a>
+            <button class="nav-btn-login" style="width: 100%;">Login</button>
+            <button class="nav-btn-signup" style="width: 100%;">Sign Up</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg hero-section">
+        <div class="absolute top-20 left-10 floating-element opacity-20" style="z-index: 0;">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none"><rect width="80" height="80" rx="16" fill="white"/></svg>
+        </div>
+        <div class="absolute bottom-20 right-10 floating-element opacity-20" style="z-index: 0; animation-delay: 2s;">
+            <svg width="100" height="100" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="50" fill="white"/></svg>
+        </div>
+        <div class="container">
+            <h1 id="heroHeadline">Learn Anything. Anywhere.</h1>
+            <p id="heroSubheadline">Join millions of learners worldwide</p>
+            <div class="button-group">
+                <button id="ctaPrimary" class="btn btn-primary">Start Learning</button>
+                <button id="ctaSecondary" class="btn btn-secondary">Browse Courses</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Course Search -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="What do you want to learn today?" />
+                <button id="searchBtn">Search</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Courses Section -->
+    <section class="section bg-light" id="courses">
+        <div class="container">
+            <div class="section-header">
+                <h2>Browse thousands of courses</h2>
+                <p>Study at your own pace</p>
+            </div>
+            <div class="course-grid">
+                <div class="card-hover course-card">
+                    <div class="course-image"><i class="fas fa-code"></i></div>
+                    <div class="course-body">
+                        <span class="course-badge">Web Development</span>
+                        <h3 class="course-title">Advanced Web Development</h3>
+                        <p class="course-description">Master modern web technologies and frameworks</p>
+                        <div class="course-meta">
+                            <span>By Sarah Johnson</span>
+                            <span><i class="fas fa-star"></i> 4.9</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-hover course-card">
+                    <div class="course-image" style="background: linear-gradient(135deg, #F97316 0%, #FB923C 100%);"><i class="fas fa-paint-brush"></i></div>
+                    <div class="course-body">
+                        <span class="course-badge" style="background: rgba(249, 115, 22, 0.1); color: #F97316;">UI/UX Design</span>
+                        <h3 class="course-title">Complete UX Design Course</h3>
+                        <p class="course-description">Learn design principles and create beautiful interfaces</p>
+                        <div class="course-meta">
+                            <span>By Michael Chen</span>
+                            <span><i class="fas fa-star"></i> 4.8</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-hover course-card">
+                    <div class="course-image" style="background: linear-gradient(135deg, #EC4899 0%, #F472B6 100%);"><i class="fas fa-chart-line"></i></div>
+                    <div class="course-body">
+                        <span class="course-badge" style="background: rgba(236, 72, 153, 0.1); color: #EC4899;">Data Science</span>
+                        <h3 class="course-title">Data Science & Machine Learning</h3>
+                        <p class="course-description">Master Python, analytics, and AI fundamentals</p>
+                        <div class="course-meta">
+                            <span>By Dr. Emily Rodriguez</span>
+                            <span><i class="fas fa-star"></i> 4.9</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-hover course-card">
+                    <div class="course-image" style="background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);"><i class="fas fa-mobile-alt"></i></div>
+                    <div class="course-body">
+                        <span class="course-badge" style="background: rgba(59, 130, 246, 0.1); color: #3B82F6;">Mobile Dev</span>
+                        <h3 class="course-title">iOS & Android Development</h3>
+                        <p class="course-description">Build native apps for iOS and Android platforms</p>
+                        <div class="course-meta">
+                            <span>By James Wilson</span>
+                            <span><i class="fas fa-star"></i> 4.7</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-hover course-card">
+                    <div class="course-image" style="background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 100%);"><i class="fas fa-cloud"></i></div>
+                    <div class="course-body">
+                        <span class="course-badge" style="background: rgba(139, 92, 246, 0.1); color: #8B5CF6;">Cloud Tech</span>
+                        <h3 class="course-title">Cloud Computing Fundamentals</h3>
+                        <p class="course-description">Learn AWS, Azure, and cloud architecture</p>
+                        <div class="course-meta">
+                            <span>By Alex Kumar</span>
+                            <span><i class="fas fa-star"></i> 4.8</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-hover course-card">
+                    <div class="course-image" style="background: linear-gradient(135deg, #06B6D4 0%, #22D3EE 100%);"><i class="fas fa-robot"></i></div>
+                    <div class="course-body">
+                        <span class="course-badge" style="background: rgba(6, 182, 212, 0.1); color: #06B6D4;">AI/ML</span>
+                        <h3 class="course-title">Artificial Intelligence & Deep Learning</h3>
+                        <p class="course-description">Master AI, neural networks, and deep learning</p>
+                        <div class="course-meta">
+                            <span>By Lisa Anderson</span>
+                            <span><i class="fas fa-star"></i> 4.9</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="section bg-white">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">50K+</div>
+                    <div class="stat-label">Active Learners</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">250+</div>
+                    <div class="stat-label">Expert Teachers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Happy Students</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">180+</div>
+                    <div class="stat-label">Available Courses</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FIND YOUR PASSION SECTION (CENTERED) -->
+    <section class="passion-section">
+        <div class="container">
+            <div class="passion-header">
+                <h2>Find your passion</h2>
+            </div>
+            <div class="passion-chips-container">
+                <button class="passion-chip active">250+ courses</button>
+                <button class="passion-chip">180+ courses</button>
+                <button class="passion-chip">320+ courses</button>
+                <button class="passion-chip">150+ courses</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRACK YOUR PROGRESS SECTION -->
+    <section class="progress-section" id="progress">
+        <div class="container">
+            <div class="progress-header">
+                <h2>Track Your Progress</h2>
+                <p>Stay motivated with visual progress tracking</p>
+            </div>
+            <div class="progress-content">
+                <div class="progress-item">
+                    <div class="progress-item-header">
+                        <span class="progress-title">Web Development Masterclass</span>
+                        <span class="progress-percentage">75%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: 75%;"></div>
+                    </div>
+                </div>
+
+                <div class="progress-item">
+                    <div class="progress-item-header">
+                        <span class="progress-title">UX Design Fundamentals</span>
+                        <span class="progress-percentage">45%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: 45%;"></div>
+                    </div>
+                </div>
+
+                <div class="stats-achievement">
+                    <div class="achievement-card">
+                        <div class="achievement-icon">🔥</div>
+                        <div class="achievement-number">12</div>
+                        <div class="achievement-label">Day Streak</div>
+                    </div>
+                    <div class="achievement-card">
+                        <div class="achievement-icon">⭐</div>
+                        <div class="achievement-number">850</div>
+                        <div class="achievement-label">XP Points</div>
+                    </div>
+                    <div class="achievement-card">
+                        <div class="achievement-icon">🏆</div>
+                        <div class="achievement-number">8</div>
+                        <div class="achievement-label">Badges</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section bg-light" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why choose us?</h2>
+                <p>Experience world-class learning</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                    <h3 class="feature-title">Study at your own pace</h3>
+                    <p class="feature-description">Learn whenever and wherever works best for you</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-tasks"></i></div>
+                    <h3 class="feature-title">Apply your knowledge</h3>
+                    <p class="feature-description">Real-world projects to build your portfolio</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-certificate"></i></div>
+                    <h3 class="feature-title">Earn recognized certificates</h3>
+                    <p class="feature-description">Boost your resume and career prospects</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-user-tie"></i></div>
+                    <h3 class="feature-title">Learn from industry experts</h3>
+                    <p class="feature-description">Taught by professionals with years of experience</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
+                    <h3 class="feature-title">Stay motivated with visual progress tracking</h3>
+                    <p class="feature-description">See your learning journey visualized</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                    <h3 class="feature-title">24/7 Student Support</h3>
+                    <p class="feature-description">Get help whenever you need it</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instructors Section -->
+    <section class="section bg-white" id="instructors">
+        <div class="container">
+            <div class="section-header">
+                <h2>Meet the instructors</h2>
+                <p>Learn from the best in the industry</p>
+            </div>
+            <div class="instructors-grid">
+                <div class="instructor-card">
+                    <div class="instructor-avatar">SJ</div>
+                    <h3 class="instructor-name">Sarah Johnson</h3>
+                    <p class="instructor-title">Web Developer</p>
+                    <p>10+ years at Google, teaching 50K+ students</p>
+                </div>
+                <div class="instructor-card">
+                    <div class="instructor-avatar" style="background: linear-gradient(135deg, #F97316 0%, #FB923C 100%);">MC</div>
+                    <h3 class="instructor-name">Michael Chen</h3>
+                    <p class="instructor-title">UX Designer</p>
+                    <p>Lead Designer at Apple, 8 years experience</p>
+                </div>
+                <div class="instructor-card">
+                    <div class="instructor-avatar" style="background: linear-gradient(135deg, #EC4899 0%, #F472B6 100%);">ER</div>
+                    <h3 class="instructor-name">Dr. Emily Rodriguez</h3>
+                    <p class="instructor-title">Data Scientist</p>
+                    <p>PhD from MIT, AI researcher at IBM</p>
+                </div>
+                <div class="instructor-card">
+                    <div class="instructor-avatar" style="background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);">JW</div>
+                    <h3 class="instructor-name">James Wilson</h3>
+                    <p class="instructor-title">Mobile Developer</p>
+                    <p>Senior dev at Meta, expert in iOS & Android</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section bg-light">
+        <div class="container">
+            <div class="section-header">
+                <h2>Real results from real learners</h2>
+                <p>Success stories from our students</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"This platform changed my career! I went from beginner to landing my dream job as a web developer in just 6 months."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AP</div>
+                        <div class="author-info">
+                            <h4>Alice Peterson</h4>
+                            <p>Web Developer</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"The instructors are amazing! Clear explanations, practical projects, and a supportive community. Highly recommended!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar" style="background: linear-gradient(135deg, #F97316 0%, #FB923C 100%);">MB</div>
+                        <div class="author-info">
+                            <h4>Marcus Brown</h4>
+                            <p>Data Scientist</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Flexible, affordable, and effective. I loved the community and the way courses are structured. Best investment in myself!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar" style="background: linear-gradient(135deg, #EC4899 0%, #F472B6 100%);">SC</div>
+                        <div class="author-info">
+                            <h4>Sophia Chen</h4>
+                            <p>UX Designer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="section bg-white" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>Choose your plan</h2>
+                <p>Select the pricing plan that works best for you</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3 class="pricing-title">Starter</h3>
+                    <div class="pricing-price">$29</div>
+                    <div class="pricing-duration">per month</div>
+                    <ul class="pricing-features">
+                        <li>Access to 50+ courses</li>
+                        <li>Basic certificates</li>
+                        <li>Email support</li>
+                        <li>Community forum access</li>
+                    </ul>
+                    <button class="btn btn-outline">Get Started</button>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div class="price-badge">POPULAR</div>
+                    <h3 class="pricing-title">Professional</h3>
+                    <div class="pricing-price">$79</div>
+                    <div class="pricing-duration">per month</div>
+                    <ul class="pricing-features">
+                        <li>Access to 250+ courses</li>
+                        <li>Professional certificates</li>
+                        <li>Priority email support</li>
+                        <li>Exclusive webinars</li>
+                        <li>Project portfolio builder</li>
+                        <li>Job placement assistance</li>
+                    </ul>
+                    <button class="btn btn-primary">Get Started</button>
+                </div>
+
+                <div class="pricing-card">
+                    <h3 class="pricing-title">Enterprise</h3>
+                    <div class="pricing-price">$199</div>
+                    <div class="pricing-duration">per month</div>
+                    <ul class="pricing-features">
+                        <li>Access to all courses</li>
+                        <li>Premium certificates</li>
+                        <li>24/7 priority support</li>
+                        <li>One-on-one mentoring</li>
+                        <li>Advanced analytics</li>
+                        <li>Custom learning paths</li>
+                    </ul>
+                    <button class="btn btn-outline">Get Started</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section bg-light">
+        <div class="container">
+            <div class="cta-section">
+                <h2>Start your learning journey today</h2>
+                <p>Join millions of successful learners around the world</p>
+                <button class="btn btn-primary">Get Started Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Us</h4>
+                    <ul>
+                        <li><a href="#">About Our Platform</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Courses</h4>
+                    <ul>
+                        <li><a href="#">Web Development</a></li>
+                        <li><a href="#">Data Science</a></li>
+                        <li><a href="#">Design</a></li>
+                        <li><a href="#">Mobile Dev</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Sitemap</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Digital Learning Platform. All rights reserved. | Trusted by leading organizations</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrollIndicator = document.getElementById('scrollIndicator');
+            const navbar = document.getElementById('navbar');
+            const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            scrollIndicator.style.width = scrollPercentage + '%';
+
+            // Add shadow to navbar on scroll
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const navLinks = document.getElementById('navLinks');
+
+        hamburgerMenu.addEventListener('click', () => {
+            hamburgerMenu.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburgerMenu.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Passion chip interaction
+        const passionChips = document.querySelectorAll('.passion-chip');
+        passionChips.forEach(chip => {
+            chip.addEventListener('click', function() {
+                passionChips.forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Category chip interaction
+        const chips = document.querySelectorAll('.category-chip');
+        chips.forEach(chip => {
+            chip.addEventListener('click', function() {
+                chips.forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Search functionality
+        const searchBtn = document.getElementById('searchBtn');
+        const searchInput = document.getElementById('searchInput');
+        
+        if (searchBtn) {
+            searchBtn.addEventListener('click', () => {
+                const query = searchInput.value;
+                if (query) {
+                    console.log('Searching for:', query);
+                }
+            });
+        }
+
+        // Button interactions
+        const buttons = document.querySelectorAll('.btn, .nav-btn-login, .nav-btn-signup');
+        buttons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                console.log('Button clicked:', this.textContent);
+            });
+        });
+
+        console.log('Premium Learning Platform with Green Logo loaded successfully!');
+    </script>
+</body>
+</html>
